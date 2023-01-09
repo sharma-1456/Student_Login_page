@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style2.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+<!-- <?php
+session_start();
+date_default_timezone_set('Asia/Kolkata');
+$conn = mysqli_connect("sql109.epizy.com","epiz_33155826","VM2uvdozzLq","epiz_33155826_mcqtest");
+if(!$conn)
+	die("FAILED TO CONNECT".mysqli_connect_error($conn));
+
+if(isset($_POST['login']))
+{
+	if(!empty($_POST['rno']) && !empty($_POST['pass']))
+	{
+        $rrr=$_SESSION['rno'] = $_POST['rno'];
+		$q = "SELECT * FROM studlist WHERE rno=$rrr";
+		$r=mysqli_query($conn,$q);
+		$arr=mysqli_fetch_array($r);
+        $flag=1;
+        if(!$arr)
+        
+        {ṇ
+            $error="WRONG USERNAME";
+            $flag=0;
+        }
+            
+		
+		if($arr['pass']==$_POST['pass'] && ($arr['class']==$_POST['usertype'] || $arr['class']=="Admin")  && $_POST['usertype']=="Faculty")
+		{
+			//$rrr=$_SESSION['rno'] = $_POST['rno'];
+			$nnn=$_SESSION['name'] = $arr['name'];
+			$ccc=$_SESSION['class'] = $arr['class'];
+			$t = date('d-m-y h:i:s');
+            if($ccc!="Admin")
+            {
+			    if(!mysqli_query($conn,"INSERT INTO log(rno,name,class,task,remark,time) VALUES($rrr,'$nnn','$ccc','Faculty Login','-','$t')"))
+			    	echo "FAILED TO INS".mysqli_error($conn);
+            }
+            header('LOCATION:fac login/facpage.php');
+        }elseif($arr['pass'] == $_POST['pass'] && $_POST['usertype']!="Faculty"){
+			$rrr=$_SESSION['rno'] = $_POST['rno'];
+			$nnn=$_SESSION['name'] = $arr['name'];
+			$ccc=$_SESSION['class'] = $arr['class'];
+			$t = date('d-m-y h:i:s');
+            if($ccc!="Admin")
+            {
+			    if(!mysqli_query($conn,"INSERT INTO log(rno,name,class,task,remark,time) VALUES($rrr,'$nnn','$ccc','Student Login','-','$t')"))
+			    	echo "FAILED TO INS".mysqli_error($conn);
+            }
+            header('LOCATION:stud login/studpage.php');
+        }elseif($arr['pass']==$_POST['pass']){
+			$error="WRONG USER TYPE";
+		}else{
+            if($flag)
+			    $error= "WRONG PASSWORD!!!";
+		}
+	}else{
+		$error= "ALL FIELDS MANDATORY!!!";
+	}
+}else{
+    $error="";
+}
+?> -->
+    <div class="outer-box">
+        <div class="inner-box">
+         <header class="header1">
+            <h1> Login Page</h1>
+         </header>
+         <main class="userdetails">
+                <form  method="POST" action="#">
+                    <p>
+                        <label for="roll-no">Roll No:</label>
+                        <input type="number" id="roll-no" name="rno"  placeholder="Enter your roll number" value="">
+                    </p>
+                    <p>
+                        <label for="pwd">Password:</label>
+                        <input type="password" id="pwd" name="pass"  placeholder="Enter your password" value="">
+                    </p>
+                    <p>
+                        <label for="select-your-identity">Faculty/Student</label>
+                        <select name="usertype" id="select-your-identity">
+                            <option value="Student" class="option-1">Student</option>
+                            <option value="Faculty" class="option-1">Faculty</option>
+                        </select>
+                    </p>
+                    <p>
+                        <input type="submit" id="submit" name="login" value="LogIn">
+                        <input type="reset" id="reset" name="reset" value="Reset">
+                    </p>
+                    <footer class="signup-footer">
+                        <?php echo "<font color=Red><b>".$error."</b></font>";?>
+                       </footer>
+                </form>
+         </main>
+        </div>
+        <div class="circle c1"></div>
+        <div class="circle c2"></div>
+    </div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<?php session_start();
+date_default_timezone_set('Asia/Kolkata');?>
+<html>
+    <link rel="stylesheet" href="style2.css">
+<body>
+	<div class="outer-box">
+<table class="table1" border=2 cellpadding=15px align=center>
+	<tr align=center>
+		<th colspan=3>Student Page</th>
+	</tr>
+	<tr align=center>
+		<td><a  class="a1" href="givetest.php">Give Test</a></td>
+		<td><a class="a1" href="myresult.php">My Result</a></td>
+		<td><a class="a1" href="chngpass.php">Change Password</a></td>
+	</tr>
+</table>
+<form method=POST action=#>
+<input type=submit name=Logout id="logout" value=Logout>
+</form>
+</div>
+</body>
+</html>
+<?php
+if(isset($_POST['Logout']))
+{
+	$conn = mysqli_connect("sql109.epizy.com","epiz_33155826","VM2uvdozzLq","epiz_33155826_mcqtest");
+	if(!$conn)
+	die("FAILED TO CONNECT".mysqli_connect_error($conn));
+	$rrr=$_SESSION['rno'];
+	$nnn=$_SESSION['name'];
+	$ccc=$_SESSION['class'];
+	$t = date('d-m-y h:i:s');
+	if(!mysqli_query($conn,"INSERT INTO log(rno,name,class,task,remark,time) VALUES($rrr,'$nnn','$ccc','Student Logout','-','$t')"))
+		echo "FAILED TO INS".mysqli_error($conn);
+	session_destroy();
+	header('LOCATION:../Loginpage.php');
+}
+?>

@@ -1,0 +1,65 @@
+<?php
+session_start();
+date_default_timezone_set('Asia/Kolkata');
+$conn = mysqli_connect("sql109.epizy.com","epiz_33155826","VM2uvdozzLq","epiz_33155826_mcqtest");
+if(!$conn)
+	die("FAILED TO CONNECT".mysqli_connect_error($conn));
+?>
+
+<html>
+<link rel="stylesheet" href="style2.css">
+
+	<body>
+<div class="outer-box">
+  <form method=POST action=# id="box">
+   <label class="select">Select Test :</label><select name=test id="seloption">
+   <?php
+  $q = "Show tables";
+   $r = mysqli_query($conn,$q);
+  if(!$r)
+	die("FAILED TO FETCH TABLES".mysqli_error($conn));
+
+  while($d=mysqli_fetch_row($r))
+  {
+	if($d[0]!="studlist" && $d[0]!="result" && $d[0]!="test_details" && $d[0]!="log")
+		echo "<option value=".$d[0].">".$d[0]."</option>";
+  }
+  ?>
+ </select>
+  <input type=submit id="next"  name=next value=next>
+ <?php
+ if(isset($_POST['next']))
+  {
+	$rno=$_SESSION['rno'];
+	$squery = "SELECT test_id FROM result WHERE rno=$rno";
+	$rt=mysqli_query($conn,$squery);
+	if(!$rt)
+		die("FAILED TO FETCH TEST IDS".mysqli_error($conn));
+	while($row=mysqli_fetch_row($rt))
+	{
+		if($row[0]==$_POST['test'])
+			die("<h1 align=center><font color=Red>SORRY, YOU CAN'T GIVE THE SAME TEST 
+		TWICE!!!</font></h1><br><br><a class="position1" id="a2" 
+		  href='studpage.php'>Return to Student Page</a>");
+	}
+	
+	$_SESSION['test']=$_POST['test'];
+	header('LOCATION:testpage.php');
+  }
+  ?>
+  </form>
+  <br><br>
+  <table class="table2" cellpadding=5px>
+	
+	  </svg>
+    <tr align=center><th>DM </th><td>Digital Marketing</td></tr>
+    <tr align=center><th>DS  </th><td>Data Structure</td></tr>
+    <tr align=center><th>SE  </th><td>Software Engineering</td></tr>
+    <tr align=center><th>PHP </th><td>PHP</td></tr>
+    <tr align=center><th>BD   </th><td>BigData</td></tr>
+  </table>
+ <a  class="position2" id="a2" href="studpage.php">Return to Student Page</a>
+</div>
+
+</body>
+</html>
